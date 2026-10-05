@@ -10,7 +10,6 @@ local HttpService = game:GetService("HttpService")
 
 local LocalPlayer = Players.LocalPlayer
 
--- Fungsi untuk menambahkan stroke rainbow pada teks
 local function addRainbowStroke(textObj)
 	local stroke = Instance.new("UIStroke")
 	stroke.Thickness = 1.5
@@ -26,7 +25,6 @@ local function addRainbowStroke(textObj)
 	end)
 end
 
--- Fungsi untuk menambahkan stroke ungu-biru bergerak pada teks
 local function addPurpleBlueStroke(textObj)
 	local stroke = Instance.new("UIStroke")
 	stroke.Thickness = 1.5
@@ -44,19 +42,16 @@ local function addPurpleBlueStroke(textObj)
 	end)
 end
 
--- Hapus GUI lama jika ada
 if CoreGui:FindFirstChild("StealAnEggUI") then
 	CoreGui.StealAnEggUI:Destroy()
 end
 
--- ScreenGui Utama
 local StealAnEggUI = Instance.new("ScreenGui")
 StealAnEggUI.Name = "StealAnEggUI"
 StealAnEggUI.Parent = CoreGui
 StealAnEggUI.ResetOnSpawn = false
 StealAnEggUI.IgnoreGuiInset = true
 
--- Frame Utama
 local MainFrame = Instance.new("ImageLabel")
 MainFrame.Name = "MainFrame"
 MainFrame.Parent = StealAnEggUI
@@ -71,7 +66,6 @@ local MainCorner = Instance.new("UICorner")
 MainCorner.CornerRadius = UDim.new(0, 10)
 MainCorner.Parent = MainFrame
 
--- Profil Avatar Bulat
 local AvatarImage = Instance.new("ImageLabel")
 AvatarImage.Name = "AvatarImage"
 AvatarImage.Parent = MainFrame
@@ -93,7 +87,6 @@ task.spawn(function()
 	end
 end)
 
--- Tombol Atas
 local TopButtons = Instance.new("Frame")
 TopButtons.Parent = MainFrame
 TopButtons.BackgroundTransparency = 1
@@ -122,7 +115,6 @@ CloseBtn.TextSize = 20
 CloseBtn.Font = Enum.Font.SourceSansBold
 addRainbowStroke(CloseBtn)
 
--- Sidebar Kiri
 local Sidebar = Instance.new("Frame")
 Sidebar.Parent = MainFrame
 Sidebar.BackgroundTransparency = 1
@@ -134,7 +126,6 @@ UIListSidebar.Parent = Sidebar
 UIListSidebar.SortOrder = Enum.SortOrder.LayoutOrder
 UIListSidebar.Padding = UDim.new(0, 4)
 
--- Containers
 local RightContainer = Instance.new("Frame")
 RightContainer.Name = "RightContainer"
 RightContainer.Parent = MainFrame
@@ -160,7 +151,6 @@ TampilanTabContainer.Visible = false
 
 local BottomBar
 
--- Management Sistem Switching Tab
 local tabs = {"Main", "Player", "Tampilan"}
 
 for _, tabName in ipairs(tabs) do
@@ -330,7 +320,6 @@ OpenScriptBtn.MouseButton1Click:Connect(function()
 	end
 end)
 
--- Box Info Akun & Jaringan
 local InfoBox = Instance.new("Frame")
 InfoBox.Parent = PlayerTabContainer
 InfoBox.Size = UDim2.new(0, 175, 0, 80)
@@ -371,7 +360,6 @@ task.spawn(function()
 	end
 end)
 
--- Fungsi Pembuat Custom Toggle Switch
 local function createToggle(name, yPos)
 	local frame = Instance.new("Frame")
 	frame.Parent = PlayerTabContainer
@@ -441,12 +429,10 @@ local function createToggle(name, yPos)
 	return frame, circleNode, function() return isToggled end, setToggleState
 end
 
--- Membuat Toggle Utama
 local _, NoClipBtn, getNoClipState, setNoClip = createToggle("NO CLIP", 92)
 local _, EspBtn, getEspState, setEsp = createToggle("Esp Player", 136)
 local _, RemovePlayerBtn, getRemoveState, setRemove = createToggle("Remove Player", 180)
 
--- Fitur NO CLIP
 local noClipConnection = nil
 NoClipBtn.MouseButton1Click:Connect(function()
 	setNoClip(not getNoClipState())
@@ -468,7 +454,6 @@ NoClipBtn.MouseButton1Click:Connect(function()
 	end
 end)
 
--- Fitur ESP PLAYER
 local espHolders = {}
 local function removeAllESP()
 	for _, item in pairs(espHolders) do
@@ -545,7 +530,6 @@ Players.PlayerAdded:Connect(function(plr)
 	end)
 end)
 
--- Fitur REMOVE PLAYER
 local hiddenCharacters = {}
 
 RemovePlayerBtn.MouseButton1Click:Connect(function()
@@ -636,7 +620,6 @@ local function createCheckboxCard(name, pos, callback)
 	end)
 end
 
--- Variabel & Penyimpanan Fitur Tampilan
 local originalLighting = {
 	ClockTime = Lighting.ClockTime,
 	Ambient = Lighting.Ambient,
@@ -644,7 +627,6 @@ local originalLighting = {
 	Sky = Lighting:FindFirstChildOfClass("Sky") and Lighting:FindFirstChildOfClass("Sky"):Clone() or nil
 }
 
--- 1. Fps Boats
 createCheckboxCard("Fps Boats", UDim2.new(0, 0, 0, 0), function(state)
 	if state then
 		settings().Rendering.QualityLevel = Enum.QualityLevel.Level01
@@ -660,7 +642,6 @@ createCheckboxCard("Fps Boats", UDim2.new(0, 0, 0, 0), function(state)
 	end
 end)
 
--- 2. 120Fps
 local fps120Conn = nil
 createCheckboxCard("120Fps", UDim2.new(0, 185, 0, 0), function(state)
 	if state then
@@ -679,7 +660,6 @@ createCheckboxCard("120Fps", UDim2.new(0, 185, 0, 0), function(state)
 	end
 end)
 
--- 3. PC Screen
 createCheckboxCard("PC Screen", UDim2.new(0, 0, 0, 52), function(state)
 	local camera = workspace.CurrentCamera
 	if state then
@@ -689,7 +669,6 @@ createCheckboxCard("PC Screen", UDim2.new(0, 0, 0, 52), function(state)
 	end
 end)
 
--- 4. Anti-night
 local antiNightConn = nil
 createCheckboxCard("Anti-night", UDim2.new(0, 185, 0, 52), function(state)
 	if state then
@@ -704,7 +683,6 @@ createCheckboxCard("Anti-night", UDim2.new(0, 185, 0, 52), function(state)
 	end
 end)
 
--- 5. Blood Moon
 local bloodMoonSky = nil
 createCheckboxCard("Blood Moon", UDim2.new(0, 0, 0, 104), function(state)
 	if state then
@@ -738,7 +716,6 @@ createCheckboxCard("Blood Moon", UDim2.new(0, 0, 0, 104), function(state)
 	end
 end)
 
--- 6. Ultara 8k
 local ultraBlur = nil
 local ultraColor = nil
 createCheckboxCard("Ultara 8k", UDim2.new(0, 185, 0, 104), function(state)
@@ -766,7 +743,6 @@ createCheckboxCard("Ultara 8k", UDim2.new(0, 185, 0, 104), function(state)
 	end
 end)
 
--- Bottom Bar Components
 BottomBar = Instance.new("Frame")
 BottomBar.Parent = MainFrame
 BottomBar.Size = UDim2.new(0, 345, 0, 32)
@@ -921,9 +897,6 @@ CloseBtn.MouseButton1Click:Connect(function()
 	StealAnEggUI:Destroy()
 end)
 
--------------------------------------------------------------------------
--- NOTIFIKASI GLOBAL LZY HUB
--------------------------------------------------------------------------
 
 local function createRainbowBorder(parent)
 	local stroke = Instance.new("UIStroke")
@@ -975,7 +948,7 @@ local function showLzyNotification(msg)
 	NotifCorner.CornerRadius = UDim.new(0, 15)
 	NotifCorner.Parent = NotifFrame
 
-	-- Foto Profil Bulat LifzxAfter2
+	
 	local NotifAvatar = Instance.new("ImageLabel")
 	NotifAvatar.Parent = NotifFrame
 	NotifAvatar.Size = UDim2.new(0, 70, 0, 70)
@@ -994,7 +967,7 @@ local function showLzyNotification(msg)
 		end
 	end)
 
-	-- Judul LZY HUB + Rainbow Outline
+	
 	local TitleLabel = Instance.new("TextLabel")
 	TitleLabel.Parent = NotifFrame
 	TitleLabel.Size = UDim2.new(0, 280, 0, 40)
@@ -1007,7 +980,7 @@ local function showLzyNotification(msg)
 	TitleLabel.TextXAlignment = Enum.TextXAlignment.Left
 	addRainbowStroke(TitleLabel)
 
-	-- Icon Mahkota
+	
 	local NotifCrown = Instance.new("ImageLabel")
 	NotifCrown.Parent = NotifFrame
 	NotifCrown.Size = UDim2.new(0, 40, 0, 40)
@@ -1015,7 +988,7 @@ local function showLzyNotification(msg)
 	NotifCrown.BackgroundTransparency = 1
 	NotifCrown.Image = "rbxassetid://96843104543422"
 
-	-- Teks [OWNER] dengan Pinggiran Rainbow
+	
 	local OwnerTag = Instance.new("TextLabel")
 	OwnerTag.Parent = NotifFrame
 	OwnerTag.Size = UDim2.new(0, 120, 0, 30)
@@ -1028,7 +1001,7 @@ local function showLzyNotification(msg)
 	OwnerTag.TextXAlignment = Enum.TextXAlignment.Left
 	addRainbowStroke(OwnerTag)
 
-	-- Pesan Notifikasi
+	
 	local MsgLabel = Instance.new("TextLabel")
 	MsgLabel.Parent = NotifFrame
 	MsgLabel.Size = UDim2.new(1, -40, 0, 50)
@@ -1042,7 +1015,7 @@ local function showLzyNotification(msg)
 	MsgLabel.TextWrapped = true
 	addRainbowStroke(MsgLabel)
 
-	-- Animasi Masuk
+	
 	NotifFrame.Position = UDim2.new(0.5, -225, 0.5, -120)
 	NotifFrame.BackgroundTransparency = 1
 	TitleLabel.TextTransparency = 1
@@ -1062,7 +1035,7 @@ local function showLzyNotification(msg)
 	TweenService:Create(NotifAvatar, TweenInfo.new(0.3), {ImageTransparency = 0}):Play()
 	TweenService:Create(NotifCrown, TweenInfo.new(0.4), {ImageTransparency = 0}):Play()
 
-	-- Hilang setelah 6 detik
+	
 	task.delay(6, function()
 		if NotifGui and NotifGui.Parent then
 			TweenService:Create(NotifFrame, TweenInfo.new(0.3), {BackgroundTransparency = 1}):Play()
@@ -1073,14 +1046,12 @@ local function showLzyNotification(msg)
 end
 
 
--- === SISTEM RECEIVER BROADCAST DENGAN RESTFUL CLOUD DB ===
 local req = (syn and syn.request) or (http and http.request) or http_request or (fluxus and fluxus.request) or request
 local DATABASE_URL = "https://api.restful-api.dev/objects/ff808181932bad12019323381a1a0000" 
 
 local lastMessageID = ""
 local initialLoad = true
 
--- Master HttpRequest Wrapper
 local function executeHttpRequest(options)
 	if req then
 		return req(options)
@@ -1093,7 +1064,6 @@ local function executeHttpRequest(options)
 	return nil
 end
 
--- Polling Otomatis Penerima Notifikasi
 task.spawn(function()
 	while task.wait(2.5) do
 		pcall(function()
